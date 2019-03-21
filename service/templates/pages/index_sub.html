@@ -1,0 +1,181 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">와인하우스</h1>
+    </div>
+    
+    {# 컨텐츠 한 세트 #}
+    <div class="card shadow mb-4">
+        <div class="card-header">
+            <!-- <h6 class="m-0 font-weight-bold text-primary">와인 목록</h6> -->
+            <form id='searchWine' method="POST" enctype="multipart/form-data">
+                <fieldset>
+                    <div class="row">
+                        
+                            
+                        <div class="input-group" >
+                            <div class="col-sm-12 col-md-12">
+                                <label>Taste
+                                    <select class="form-control" id='taste1' onchange="categoryChange(this)" name='taste1' style="float:left;">
+                                        <option>Select</option>
+                                        <option value="a">spicy</option>
+                                        <option value="b">fruity</option>
+                                        <option value="c">acidity</option>
+                                        <option value="d">floral</option>
+                                        <option value="e">oaky</option>
+                                        <option value="f">citrus</option>
+                                        <option value="g">woody</option>
+                                        <option value="h">light</option>
+                                        <option value="i">sweet</option>
+                                        <option value="j">dry</option>
+                                    </select>
+                                    <select class="form-control" id="good" name='taste2' style="float:left;">
+                                        <option>Select</option>
+                                    </select>
+                                </label>
+                                <label>
+                                    Country
+                                    <select class="form-control" name='country' style="float:left;" >
+                                        <option>원산지</option>
+                                        <option>US</option>
+                                        <option>France</option>
+                                        <option>Italy</option>
+                                        <option>Austria</option>
+                                        <option>Portugal</option>
+                                    </select>
+                                </label>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12">
+                            <div class="input-group">
+                                <input type="text" name='wineKeyword' class="form-control border-1 small" placeholder="Search for..."
+                                    aria-label="Search" aria-describedby="basic-addon2">
+                                <!-- <div class="input-group-append"> -->
+                                <!-- <input class="btn btn-primary" type="submit" value="검색" /> -->
+                            </div>
+                        </div>
+                        <input class="btn btn-primary" type="submit" value="검색" />
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                    <div class="row">
+                        {% for info in infos: %}
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="card h-100">
+                                {% if info['color'] == 'red': %}
+                                <a href="#"><img class="card-img-top" src="/static/upload/5135c595354e07b1c4d943cd8890f5ee.jpg" alt=""></a>
+                                {% else: %}
+                                <a href="#"><img class="card-img-top" src="/static/upload/e5ebe3ac97507715f877aeccdc5f38ba.jpg" alt=""></a>
+                                {% endif %}
+                                <div class="card-body">
+                                    <h4 class="card-title">
+                                        <a href="/wineinfo/{{info['id']}}">{{info['title']}}</a>                                                    </h4>
+                                    <h5>가격       : ${{info['price']}}</h5>
+                                    <h6>원산지     : {{info['country']}} , {{info['province']}}</h6>
+                                    <h6>Wine Color : {{info['color']}}</h6>
+                                    <!-- <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!
+                                                                Lorem ipsum dolor sit amet.</p> -->
+                                </div>
+                                <div class="card-footer">
+                                    <small class="text-muted">{{info['points']}}</small>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                        <!-- <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="card h-100">
+                                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+                                <div class="card-body">
+                                    <h4 class="card-title">
+                                        <a href="#">Item One</a>
+                                    </h4>
+                                    <h5>$24.99</h5>
+                                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
+                                </div>
+                                <div class="card-footer">
+                                    <small class="text-muted">★ ★ ★ ★ ☆</small>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="card h-100">
+                                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+                                <div class="card-body">
+                                    <h4 class="card-title">
+                                        <a href="#">Item Three</a>
+                                    </h4>
+                                    <h5>$24.99</h5>
+                                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
+                                </div>
+                                <div class="card-footer">
+                                    <small class="text-muted">★ ★ ★ ★ ☆</small>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="card h-100">
+                                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+                                <div class="card-body">
+                                    <h4 class="card-title">
+                                        <a href="#">Item Four</a>
+                                    </h4>
+                                    <h5>$24.99</h5>
+                                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
+                                </div>
+                                <div class="card-footer">
+                                    <small class="text-muted">★ ★ ★ ★ ☆</small>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="card h-100">
+                                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+                                <div class="card-body">
+                                    <h4 class="card-title">
+                                        <a href="#">Item Five</a>
+                                    </h4>
+                                    <h5>$24.99</h5>
+                                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!
+                                        Lorem ipsum dolor sit amet.</p>
+                                </div>
+                                <div class="card-footer">
+                                    <small class="text-muted">★ ★ ★ ★ ☆</small>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="card h-100">
+                                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+                                <div class="card-body">
+                                    <h4 class="card-title">
+                                        <a href="#">Item Six</a>
+                                    </h4>
+                                    <h5>$24.99</h5>
+                                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
+                                </div>
+                                <div class="card-footer">
+                                    <small class="text-muted">★ ★ ★ ★ ☆</small>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.container-fluid -->
